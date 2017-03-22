@@ -5,7 +5,7 @@ from sklearn import tree
 from sklearn.externals.six import StringIO
 import pydot
 
-allElectronicsData = open(r'example.csv','rb')
+allElectronicsData = open(r'example_en.csv','rb')
 reader = csv.reader(allElectronicsData)
 headers = reader.next()
 #print headers
@@ -20,8 +20,8 @@ for row in reader:
         rowDic[headers[i]] = row[i]
     featureList.append(rowDic)
 
-print featureList
-print labelList
+#print featureList
+#print labelList
 
 vec = DictVectorizer()
 dummyX = vec.fit_transform(featureList).toarray()
@@ -32,9 +32,9 @@ dummyY = lb.fit_transform(labelList)
 
 clf = tree.DecisionTreeClassifier(criterion="entropy")
 clf = clf.fit(dummyX,dummyY)
+print "clf:"+str(clf)
 
-
-with open("all.dot","w") as f:
+with open("all_en.dot","w") as f:
     f = tree.export_graphviz(clf,feature_names=vec.get_feature_names(),out_file=f)
 
 '''
